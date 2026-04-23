@@ -1,38 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weather Alert Overlay</title>
-
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: transparent !important;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+html,body{
+margin:0;
+background:transparent;
+overflow:hidden;
+font-family:Arial,sans-serif;
 }
 
-#alert {
-  display: none;
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  background: rgba(180, 0, 0, 0.92);
-  color: white;
-  padding: 16px 24px;
-  border-radius: 16px;
-  font-size: 30px;
-  font-weight: 900;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+#alert{
+display:none;
+position:fixed;
+top:30px;
+left:30px;
+background:rgba(180,0,0,.95);
+color:white;
+padding:18px 28px;
+border-radius:16px;
+font-size:32px;
+font-weight:900;
+box-shadow:0 4px 18px rgba(0,0,0,.35);
 }
 
-.small {
-  display: block;
-  font-size: 18px;
-  font-weight: 700;
-  margin-top: 4px;
+.small{
+display:block;
+font-size:18px;
+margin-top:6px;
 }
 </style>
 </head>
@@ -40,32 +35,43 @@ html, body {
 <body>
 
 <div id="alert">
-  🚨 <span id="alertText">TORNADO WARNING ISSUED</span>
-  <span class="small">WeatherHolidays Live Chase Alert</span>
+🚨 <span id="msg">TORNADO WARNING ISSUED</span>
+<span class="small">WeatherHolidays Chase Alert</span>
 </div>
 
 <script>
-async function checkWarning() {
-  try {
-    const response = await fetch("https://storm-warning-bot.onrender.com/status.json?cache=" + Date.now());
-    const data = await response.json();
+async function checkWarning(){
 
-    const alertBox = document.getElementById("alert");
-    const alertText = document.getElementById("alertText");
+try{
+let response=await fetch(
+"https://storm-warning-bot.onrender.com/status.json",
+{cache:"no-store"}
+);
 
-    if (data.state === "warning") {
-      alertText.textContent = data.text || "TORNADO WARNING ISSUED";
-      alertBox.style.display = "block";
-    } else {
-      alertBox.style.display = "none";
-    }
-  } catch (error) {
-    console.log("Warning check failed", error);
-  }
+let data=await response.json();
+
+console.log(data); // debugging
+
+if(data.state==="warning"){
+document.getElementById("msg").innerText=data.text;
+document.getElementById("alert").style.display="block";
+}
+else{
+document.getElementById("alert").style.display="none";
+}
+
+}catch(e){
+
+// TEMP fallback so we can see something while testing
+document.getElementById("alert").style.display="block";
+console.log(e);
+
+}
+
 }
 
 checkWarning();
-setInterval(checkWarning, 5000);
+setInterval(checkWarning,5000);
 </script>
 
 </body>
