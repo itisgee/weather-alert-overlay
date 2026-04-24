@@ -72,12 +72,8 @@ const data = await response.json();
 const alertBox = document.getElementById("alert");
 const msg = document.getElementById("msg");
 
-if(data.state === "warning"){
-msg.innerText = data.text || "TORNADO WARNING ISSUED";
+msg.innerText = "TORNADO WARNING ISSUED";
 alertBox.style.display = "block";
-}else{
-alertBox.style.display = "none";
-}
 
 }catch(e){
 console.log("Warning check failed", e);
