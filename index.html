@@ -68,6 +68,8 @@ const response = await fetch(
 );
 
 const data = await response.json();
+  data.state="tornado_emergency";
+data.text="TORNADO EMERGENCY";
 
 const alertBox = document.getElementById("alert");
 const msg = document.getElementById("msg");
