@@ -72,13 +72,29 @@ const data = await response.json();
 const alertBox = document.getElementById("alert");
 const msg = document.getElementById("msg");
 
-if(data.state==="tornado"){
+if(data.state==="tornado_emergency"){
+alertBox.style.display="block";
+alertBox.style.background="rgba(160,0,180,.96)";
+alertBox.style.color="white";
+alertBox.style.animation="pulse 0.8s infinite";
+msg.innerText=data.text;
+}
 
+else if(data.state==="pds_tornado"){
+alertBox.style.display="block";
+alertBox.style.background="rgba(110,0,0,.96)";
+alertBox.style.color="white";
+alertBox.style.animation="pulse .95s infinite";
+msg.innerText=data.text;
+}
+
+else if(data.state==="tornado"){
 alertBox.style.display="block";
 alertBox.style.background="rgba(180,0,0,.95)";
 alertBox.style.color="white";
 alertBox.style.animation="pulse 1.4s infinite";
 msg.innerText=data.text;
+}
 
 }
 
