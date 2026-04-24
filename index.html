@@ -72,8 +72,30 @@ const data = await response.json();
 const alertBox = document.getElementById("alert");
 const msg = document.getElementById("msg");
 
-msg.innerText = "TORNADO WARNING ISSUED";
-alertBox.style.display = "block";
+if(data.state==="tornado"){
+
+alertBox.style.display="block";
+alertBox.style.background="rgba(180,0,0,.95)";
+alertBox.style.color="white";
+alertBox.style.animation="pulse 1.4s infinite";
+msg.innerText=data.text;
+
+}
+
+if(data.state==="severe"){
+alertBox.style.display="block";
+alertBox.style.background="rgba(255,200,0,.95)";
+alertBox.style.color="black";
+alertBox.style.animation="none";
+msg.innerText=data.text;
+
+}
+
+else{
+
+alertBox.style.display="none";
+
+}
 
 }catch(e){
 console.log("Warning check failed", e);
