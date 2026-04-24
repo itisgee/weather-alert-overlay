@@ -1,61 +1,51 @@
-<script>
-async function checkWarning(){
-  try{
-    const response = await fetch(
-      "https://storm-warning-bot.onrender.com/status.json",
-      {cache:"no-store"}
-    );
-
-    const data = await response.json();
-
-    // TEMP TEST MODE - change these two lines to test different alerts
-    data.state = "tornado_emergency";
-    data.text = "TORNADO EMERGENCY";
-
-    const alertBox = document.getElementById("alert");
-    const msg = document.getElementById("msg");
-
-    if(data.state==="tornado_emergency"){
-      alertBox.style.display="block";
-      alertBox.style.background="rgba(160,0,180,.96)";
-      alertBox.style.color="white";
-      alertBox.style.animation="pulse 0.8s infinite";
-      msg.innerText=data.text;
-    }
-
-    else if(data.state==="pds_tornado"){
-      alertBox.style.display="block";
-      alertBox.style.background="rgba(110,0,0,.96)";
-      alertBox.style.color="white";
-      alertBox.style.animation="pulse 1.0s infinite";
-      msg.innerText=data.text;
-    }
-
-    else if(data.state==="tornado"){
-      alertBox.style.display="block";
-      alertBox.style.background="rgba(180,0,0,.95)";
-      alertBox.style.color="white";
-      alertBox.style.animation="pulse 1.4s infinite";
-      msg.innerText=data.text;
-    }
-
-    else if(data.state==="severe"){
-      alertBox.style.display="block";
-      alertBox.style.background="rgba(255,200,0,.95)";
-      alertBox.style.color="black";
-      alertBox.style.animation="none";
-      msg.innerText=data.text;
-    }
-
-    else{
-      alertBox.style.display="none";
-    }
-
-  }catch(e){
-    console.log("Warning check failed", e);
-  }
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+html,body{
+margin:0;
+background:transparent;
+overflow:hidden;
+font-family:Arial,sans-serif;
 }
 
-checkWarning();
-setInterval(checkWarning,5000);
-</script>
+#loader{
+position:fixed;
+top:0;
+left:0;
+font-size:1px;
+color:rgba(255,255,255,0.01);
+}
+
+#alert{
+display:block;
+position:fixed;
+top:30px;
+left:30px;
+background:rgba(160,0,180,.96);
+color:white;
+padding:6px 16px;
+border-radius:16px;
+font-size:26px;
+font-weight:900;
+animation:pulse .8s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);box-shadow:0 0 8px rgba(255,0,0,.4);}
+50%{transform:scale(1.02);box-shadow:0 0 28px rgba(255,0,0,.95);}
+100%{transform:scale(1);box-shadow:0 0 8px rgba(255,0,0,.4);}
+}
+</style>
+</head>
+
+<body>
+<div id="loader">.</div>
+
+<div id="alert">
+<span id="msg">TORNADO EMERGENCY</span>
+</div>
+
+</body>
+</html>
